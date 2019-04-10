@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import PostModelForm
+from .models import Post
 
 
 # Create your views here.
@@ -8,7 +9,7 @@ def create(request):
         form = PostModelForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('posts:create')
+            return redirect('posts:list')
         pass
     
     else:
@@ -17,3 +18,11 @@ def create(request):
             'form': form
         }
         return render(request, 'posts/create.html', context)
+        
+        
+def list(request):
+    posts = Post.objects.all()
+    context = {
+        'posts': posts
+    }
+    return render(request, 'posts/list.html', context)

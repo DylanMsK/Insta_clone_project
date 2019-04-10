@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block body %}
+<div class="row justify-content-between">
+  {% for post in posts%}
+    <div class="card" style="width: 18rem;">
+      <img src="https://picsum.photos/293/293/?random" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">{{ post }}</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
