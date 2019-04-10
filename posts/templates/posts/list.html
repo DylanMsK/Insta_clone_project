@@ -7,9 +7,8 @@
     <div class="card" style="width: 18rem;">
       <img src="https://picsum.photos/293/293/?random" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">{{ post }}</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <p class="card-text">{{ post.content }}</p>
+        <a href="{% url 'posts:delete' post.id %}" class="btn btn-danger">삭제</a>
       </div>
     </div>
   {% endfor %}
