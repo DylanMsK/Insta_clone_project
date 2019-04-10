@@ -25,7 +25,7 @@ SECRET_KEY = 'f4uw#0u34i#c-a-3*=al#%%js2a86f^phrp-)3y9jl_3g85)mp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['last-dylankang.c9users.io']
 
 
 # Application definition
