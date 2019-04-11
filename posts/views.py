@@ -39,7 +39,7 @@ def update(request, post_id):
     if request.method == 'POST':
         form = PostModelForm(request.POST, instance=post)
         if form.is_valid():
-            post = form.save()
+            form.save()
             return redirect('posts:list')
     
     else:
