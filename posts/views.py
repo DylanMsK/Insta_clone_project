@@ -6,7 +6,7 @@ from .models import Post
 # Create your views here.
 def create(request):
     if request.method == 'POST':
-        form = PostModelForm(request.POST)
+        form = PostModelForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('posts:list')
