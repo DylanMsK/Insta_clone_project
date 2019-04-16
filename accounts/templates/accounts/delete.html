@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>정말로 탈퇴하실건가요ㅜㅠㅜㅠㅜ</h1>
+<form method='POST'>
+    {% csrf_token %}
+    <button class='btn btn-dark' type='submit'>지워주세요옷!</button>
+</form>
+{% endblock %}

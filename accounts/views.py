@@ -52,3 +52,11 @@ def profile(request, username):
         'profile': profile,
     }
     return render(request, 'accounts/profile.html', context)
+    
+    
+def delete(request):
+    if request.method == 'POST':
+        request.user.delete()
+        return redirect('accounts:signup')
+    else:
+        return render(request, 'accounts/delete.html')
