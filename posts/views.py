@@ -85,3 +85,4 @@ def like(request, post_id):
         post.like_users.add(request.user)
 
     return redirect('posts:list')
+    
