@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .forms import CustomUserCreationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.decorators import login_required
 
 # User 모델을 가져오는 방법
 # from django.contrib.auth.models import User
@@ -12,14 +14,14 @@ from django.contrib.auth import get_user_model
 # Create your views here.
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             # auth_login(request, form.get_user())
             auth_login(request, user)
             return redirect('posts:list')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
         context = {
             'form': form,
         }
@@ -60,3 +62,14 @@ def delete(request):
         return redirect('accounts:signup')
     else:
         return render(request, 'accounts/delete.html')
+        
+
+@login_required
+def follow(request, user_id):
+    person = get_object_or_404(get_user_model(), pk=user_id)
+    if request.user in person.followers.all():
+        person.followers.remove(request.user)
+    else:
+        print(person)
+        person.followers.add(request.user)
+    return redirect('profile', person.username)
