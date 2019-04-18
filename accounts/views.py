@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .forms import CustomUserCreationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
@@ -10,6 +9,10 @@ from django.contrib.auth.decorators import login_required
 # from django.conf import settings  ==> settings.AUTH_USER_MODEL
 from django.contrib.auth import get_user_model
 
+from .forms import CustomUserCreationForm
+from .forms import ProfileForm
+from .models import Profile
+
 
 # Create your views here.
 def signup(request):
@@ -18,6 +21,8 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             # auth_login(request, form.get_user())
+            # 가입된 유저의 Profile 레코드 함께 생성
+            Profile.objects.create(user=user)
             auth_login(request, user)
             return redirect('posts:list')
     else:
@@ -73,3 +78,18 @@ def follow(request, user_id):
         print(person)
         person.followers.add(request.user)
     return redirect('profile', person.username)
+    
+
+@login_required
+def change_profile(request):
+    if request.method == 'POST':
+        profile_form = ProfileForm(data=request.POST, instance=request.user.profile)
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('profile', request.user.username)
+    else:
+        profile_form = ProfileForm(instance=request.user.profile)
+        context = {
+            'profile_form': profile_form,
+        }
+    return render(request, 'accounts/change_profile.html', context)

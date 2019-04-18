@@ -10,8 +10,13 @@
     {% endif %}
   {% endif %}
 </h1>
+<div>
+  <p><strong>{{profile.profile.nickname}}</strong></p>
+  <p><strong>{{profile.profile.description}}</strong></p>
+</div>
 {% if user == profile %}
 <a href="{% url 'accounts:delete' %}" class='btn btn-danger'>회원탈퇴</a>
+<a href="{% url 'accounts:change_profile' %}" class='btn btn-info'>프로필변경</a>
 {% endif %}
 <div class="row">
   {% for post in profile.post_set.all %}
