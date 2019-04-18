@@ -1,23 +1,28 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<h1>{{profile.username}}
-  {% if user != profile %}
-    {% if user in profile.followers.all %}
-      <a class='btn btn-primary' href="{% url 'accounts:follow' profile.id %}">언팔로우</a>
-    {% else%}
-      <a class='btn btn-info' href="{% url 'accounts:follow' profile.id %}">팔로우</a>
+<div class="row">
+  <div class="col-3">
+    <h1>{{profile.username}}
+    </h1>
+    <img src="{{profile.profile.image.url}}" class='rounded-circle'></img>
+    {% if user != profile %}
+      {% if user in profile.followers.all %}
+        <a class='btn btn-primary' href="{% url 'accounts:follow' profile.id %}">언팔로우</a>
+      {% else%}
+        <a class='btn btn-info' href="{% url 'accounts:follow' profile.id %}">팔로우</a>
+      {% endif %}
     {% endif %}
+  </div>
+  <div class=col-9>
+    <p><strong>{{profile.profile.nickname}}</strong></p>
+    <p><strong>{{profile.profile.description}}</strong></p>
+  </div>
+  {% if user == profile %}
+  <a href="{% url 'accounts:delete' %}" class='btn btn-danger'>회원탈퇴</a>
+  <a href="{% url 'accounts:change_profile' %}" class='btn btn-info'>프로필변경</a>
   {% endif %}
-</h1>
-<div>
-  <p><strong>{{profile.profile.nickname}}</strong></p>
-  <p><strong>{{profile.profile.description}}</strong></p>
 </div>
-{% if user == profile %}
-<a href="{% url 'accounts:delete' %}" class='btn btn-danger'>회원탈퇴</a>
-<a href="{% url 'accounts:change_profile' %}" class='btn btn-info'>프로필변경</a>
-{% endif %}
 <div class="row">
   {% for post in profile.post_set.all %}
   <div class="col-4">

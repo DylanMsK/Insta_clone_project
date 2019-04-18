@@ -12,8 +12,6 @@ def create(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
-            print(request)
-            print(request.user)
             post.save()
             return redirect('posts:list')
         pass
